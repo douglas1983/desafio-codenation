@@ -37,4 +37,12 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         return userRepository.findAll();
     }
 
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public void deleleById(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }

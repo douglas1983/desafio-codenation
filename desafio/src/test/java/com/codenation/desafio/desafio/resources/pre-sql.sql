@@ -1,6 +1,8 @@
-insert into users
-  (full_name,email,password)
-values('Douglas Morato', 'dmoratos@gmail.com', '123');
+delete
+from event_logs;
+delete
+from users;
+
 insert into users
   (id, full_name, email, password, created_date)
 values

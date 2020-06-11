@@ -86,4 +86,10 @@ public class User extends Auditable<String> implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void setDataUpdate(User user) {
+        setEmail(user.getEmail());
+        setFullName(user.getFullName());
+    }
+
 }
