@@ -32,7 +32,7 @@ import com.codenation.desafio.desafio.DesafioApplication;
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @SpringBootTest(classes = DesafioApplication.class)
-@Sql(scripts={"classpath:pre-sql.sql"})
+@Sql({ "pre-sql.sql" })
 public class Oauth2Test {
 
     @Value("${security.oauth2.client.client-id}")
