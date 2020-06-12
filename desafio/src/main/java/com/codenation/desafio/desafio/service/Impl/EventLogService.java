@@ -9,6 +9,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.codenation.desafio.desafio.dto.EventLogDTO;
+import com.codenation.desafio.desafio.dto.EventLogUpdateDTO;
 import com.codenation.desafio.desafio.entity.EventLog;
 import com.codenation.desafio.desafio.mappers.EventLogMapper;
 import com.codenation.desafio.desafio.repository.EventLogRepository;
@@ -38,8 +39,13 @@ public class EventLogService implements EventLogServiceInterface {
         return new PageImpl<EventLogDTO>(eventslogDTO, eventlogs.getPageable(), eventlogs.getSize());
     }
 
-    public EventLog save(EventLog event) {
-        return repository.save(event);
+    public EventLog save(EventLog record) {
+        return repository.save(record);
+    }
+
+    public EventLog saveDTO(EventLogUpdateDTO record) {
+        EventLog eventSave = mapper.map(record);
+        return repository.save(eventSave);
     }
 
     public void deleleById(Long id) {

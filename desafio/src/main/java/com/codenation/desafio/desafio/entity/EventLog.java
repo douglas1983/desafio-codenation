@@ -15,7 +15,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.codenation.desafio.desafio.dto.EventLogUpdateDTO;
 import com.codenation.desafio.desafio.enuns.Level;
+import com.google.common.base.Strings;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -64,12 +66,25 @@ public class EventLog extends Auditable<String> {
   @Column
   private Long quantity;
 
-  public void setDataUpdate(EventLog event) {
-    setEventLog(event.getEventLog());
-    setLevel(event.getLevel());
-    setDescription(event.getDescription());
-    setOrigin(event.getOrigin());
-    setEventDate(event.getEventDate());
+  public void setDataUpdate(EventLogUpdateDTO event) {
+    if (!Strings.isNullOrEmpty(event.getEventLog())) {
+      setEventLog(event.getEventLog());
+    }
+    if (event.getLevel() != null) {
+      setLevel(event.getLevel());
+    }
+    if (!Strings.isNullOrEmpty(event.getDescription())) {
+      setDescription(event.getDescription());
+    }
+    if (!Strings.isNullOrEmpty(event.getOrigin())) {
+      setOrigin(event.getOrigin());
+    }
+    if (event.getEventDate() != null) {
+      setEventDate(event.getEventDate());
+    }
+    if (event.getQuantity() != null) {
+      setQuantity(event.getQuantity());
+    }
   }
 
 }

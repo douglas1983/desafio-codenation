@@ -1,6 +1,7 @@
 package com.codenation.desafio.desafio.endpoints;
 
 import com.codenation.desafio.desafio.dto.EventLogDTO;
+import com.codenation.desafio.desafio.dto.EventLogUpdateDTO;
 import com.codenation.desafio.desafio.entity.EventLog;
 import com.codenation.desafio.desafio.service.Impl.EventLogService;
 import com.querydsl.core.types.Predicate;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,12 +42,12 @@ public class EventLogController {
     }
 
     @PostMapping
-    public ResponseEntity<EventLog> create(@RequestBody EventLog event) {
-        return ResponseEntity.ok().body(service.save(event));
+    public ResponseEntity<EventLog> create(@RequestBody EventLogUpdateDTO event) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDTO(event));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody EventLog event) {
+    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody EventLogUpdateDTO event) {
         return service.findById(id).map(record -> {
             record.setDataUpdate(event);
             EventLog updated = service.save(record);
