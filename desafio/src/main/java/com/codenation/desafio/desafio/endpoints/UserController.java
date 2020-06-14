@@ -1,8 +1,6 @@
 package com.codenation.desafio.desafio.endpoints;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.codenation.desafio.desafio.entity.User;
 import com.codenation.desafio.desafio.service.Impl.UserService;
@@ -15,9 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -32,6 +30,7 @@ public class UserController {
         return service.findById(id).orElse(null);
     }
 
+    @SecurityRequirements
     @GetMapping("")
     public List<User> findAll() {
         return service.findAll();

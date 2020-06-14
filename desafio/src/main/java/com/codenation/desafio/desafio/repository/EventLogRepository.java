@@ -1,8 +1,5 @@
 package com.codenation.desafio.desafio.repository;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.codenation.desafio.desafio.entity.EventLog;
 import com.codenation.desafio.desafio.entity.QEventLog;
 import com.querydsl.core.types.dsl.StringExpression;

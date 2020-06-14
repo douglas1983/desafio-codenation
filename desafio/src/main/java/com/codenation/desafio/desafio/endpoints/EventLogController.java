@@ -6,10 +6,10 @@ import com.codenation.desafio.desafio.entity.EventLog;
 import com.codenation.desafio.desafio.service.Impl.EventLogService;
 import com.querydsl.core.types.Predicate;
 
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -37,7 +37,9 @@ public class EventLogController {
     }
 
     @GetMapping()
-    public Page<EventLogDTO> findAll(@QuerydslPredicate(root = EventLog.class) Predicate predicate, Pageable pageable) {
+    @PageableAsQueryParam
+    public Page<EventLogDTO> findAll(@Parameter(hidden = true) Pageable pageable,
+            @QuerydslPredicate(root = EventLog.class) Predicate predicate) {
         return service.findAll(predicate, pageable);
     }
 

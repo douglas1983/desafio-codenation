@@ -31,14 +31,15 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/user").permitAll().anyRequest()
-        .authenticated();
+    http.csrf().disable().authorizeRequests().antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+        .permitAll().antMatchers(HttpMethod.GET, "/user").permitAll().anyRequest().authenticated();
   }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/user").antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-        "/configuration/security", "/swagger-ui.html", "/webjars/**");
+    web.ignoring().antMatchers("/user").antMatchers("/v3/api-docs/**", "/v3/api-docs/swagger-config",
+        "/v3/api-docs/securityscheme", "/swagger-ui/**", "/v3/api-docs.yml", "/configuration/ui",
+        "/swagger-resources/**", "/configuration/security", "/swagger-ui.html", "/webjars/**");
 
   }
 

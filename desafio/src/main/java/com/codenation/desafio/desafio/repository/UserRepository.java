@@ -1,6 +1,5 @@
 package com.codenation.desafio.desafio.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.codenation.desafio.desafio.entity.User;
