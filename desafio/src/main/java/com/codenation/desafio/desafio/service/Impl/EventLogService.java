@@ -12,6 +12,7 @@ import com.codenation.desafio.desafio.repository.EventLogRepository;
 import com.codenation.desafio.desafio.service.EventLogServiceInterface;
 import com.querydsl.core.types.Predicate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +23,9 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class EventLogService implements EventLogServiceInterface {
-
+    @Autowired
     private EventLogRepository repository;
+    @Autowired
     private EventLogMapper mapper;
 
     public Optional<EventLog> findById(Long id) {

@@ -1,5 +1,6 @@
 package com.codenation.desafio.desafio.endpoints;
 
+import com.codenation.desafio.desafio.annotations.PredicateAsQueryParamEventLog;
 import com.codenation.desafio.desafio.dto.EventLogDTO;
 import com.codenation.desafio.desafio.dto.EventLogUpdateDTO;
 import com.codenation.desafio.desafio.entity.EventLog;
@@ -7,9 +8,11 @@ import com.codenation.desafio.desafio.service.Impl.EventLogService;
 import com.querydsl.core.types.Predicate;
 
 import org.springdoc.core.converters.models.PageableAsQueryParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +31,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping(value = "/eventlog")
 public class EventLogController {
-
+    @Autowired
     private EventLogService service;
 
     @GetMapping("/{id}")
@@ -37,9 +40,11 @@ public class EventLogController {
     }
 
     @GetMapping()
+    @PredicateAsQueryParamEventLog
     @PageableAsQueryParam
-    public Page<EventLogDTO> findAll(@Parameter(hidden = true) Pageable pageable,
-            @QuerydslPredicate(root = EventLog.class) Predicate predicate) {
+    public Page<EventLogDTO> findAll(
+            @Parameter(hidden = true) @QuerydslPredicate(root = EventLog.class) Predicate predicate,
+            @Parameter(hidden = true) @PageableDefault(size = 10) Pageable pageable) {
         return service.findAll(predicate, pageable);
     }
 

@@ -14,6 +14,7 @@ import com.codenation.desafio.desafio.entity.EventLog;
 public interface EventLogMapper {
 
     @Mappings({ @Mapping(source = "level", target = "level") })
+
     EventLogDTO map(EventLog eventlog);
 
     EventLog map(EventLogUpdateDTO eventlog);
