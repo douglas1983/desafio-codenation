@@ -41,7 +41,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @SpringBootTest(classes = DesafioApplication.class)
-@Sql({ "pre-sql.sql" })
+@Sql("pre-sql.sql")
 public class EventLogControllerTests {
 
   private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
