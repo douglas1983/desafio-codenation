@@ -60,7 +60,7 @@ public class Oauth2Test {
                 .andReturn();
 
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
+        assertEquals(401, status);
     }
 
     @Test

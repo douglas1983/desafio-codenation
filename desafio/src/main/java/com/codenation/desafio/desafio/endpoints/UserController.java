@@ -35,7 +35,7 @@ public class UserController {
 
     @Operation(summary = "Busca um Usuário por ID", description = "Busca um Usuário por ID", tags = { "Usuários" })
     @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json"))
-    @GetMapping(path = { "/{id}" }, consumes = { "application/json" })
+    @GetMapping(path = { "/{id}" })
 
     public User findById(@PathVariable Long id) {
         return service.findById(id).orElse(null);
@@ -44,7 +44,7 @@ public class UserController {
     @Operation(summary = "Busca todos os usuários", description = "Busca todos os usuários", tags = { "Usuários" })
     @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json"))
 
-    @GetMapping(consumes = { "application/json" })
+    @GetMapping()
     public List<User> findAll() {
         return service.findAll();
     }
