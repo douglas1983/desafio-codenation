@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 
 import com.codenation.desafio.desafio.entity.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,6 +59,8 @@ public class UserControllerTests {
 
   private MockMvc mockMvc;
 
+  Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
+
   @Before
   public void setup() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
@@ -72,29 +75,26 @@ public class UserControllerTests {
 
     String resultString = result.getResponse().getContentAsString();
 
-    Gson gson = new Gson();
-
-    User user = gson.fromJson(resultString, User.class);
+    User user = this.gson.fromJson(resultString, User.class);
 
     assertNotNull(user);
   }
 
-  // @Test
-  // public void testNewUser() throws Exception {
-  // String token = obtainAccessToken("bruno@gmail.com", "123456");
-  // User newUser = new User();
-  // newUser.setEmail("dmoratos@gmail.com");
-  // newUser.setFullName("Douglas Morato");
-  // newUser.setPassword("123456");
-  // Gson gson = new Gson();
-  // String userJosn = gson.toJson(newUser);
-  // MvcResult result = mockMvc.perform(
-  // post("/user").header("Authorization", "Bearer " +
-  // token).contentType(APPLICATION_JSON_UTF8).content(userJosn))
-  // .andReturn();
-  // int status = result.getResponse().getStatus();
-  // assertEquals(200, status);
-  // }
+  @Test
+  public void testNewUser() throws Exception {
+    String token = obtainAccessToken("bruno@gmail.com", "123456");
+    User newUser = new User();
+    newUser.setEmail("dmoratos@gmail.com");
+    newUser.setFullName("Douglas Morato");
+    newUser.setPassword("123456");
+
+    String userJosn = this.gson.toJson(newUser);
+    MvcResult result = mockMvc.perform(
+        post("/user").header("Authorization", "Bearer " + token).contentType(APPLICATION_JSON_UTF8).content(userJosn))
+        .andReturn();
+    int status = result.getResponse().getStatus();
+    assertEquals(201, status);
+  }
 
   @Test
   public void testEditUser() throws Exception {
@@ -103,8 +103,7 @@ public class UserControllerTests {
     newUser.setEmail("dmoratos@gmail.com");
     newUser.setFullName("Douglas Morato");
 
-    Gson gson = new Gson();
-    String userJosn = gson.toJson(newUser);
+    String userJosn = this.gson.toJson(newUser);
     MvcResult result = mockMvc.perform(put("/user/6001").header("Authorization", "Bearer " + token)
         .contentType(APPLICATION_JSON_UTF8).content(userJosn)).andReturn();
     int status = result.getResponse().getStatus();

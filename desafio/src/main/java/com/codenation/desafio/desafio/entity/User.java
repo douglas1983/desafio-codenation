@@ -90,6 +90,7 @@ public class User extends Auditable<String> implements UserDetails {
     public void setDataUpdate(User user) {
         setEmail(user.getEmail());
         setFullName(user.getFullName());
+        setPassword(user.getPassword());
     }
 
 }
