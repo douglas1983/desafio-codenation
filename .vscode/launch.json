@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CodeLens (Launch) - DesafioApplication",
+      "request": "launch",
+      "mainClass": "com.codenation.desafio.DesafioApplication",
+      "projectName": "desafio"
+    },
+    {
+      "type": "java",
       "name": "Spring Boot-DesafioApplication<desafio>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
