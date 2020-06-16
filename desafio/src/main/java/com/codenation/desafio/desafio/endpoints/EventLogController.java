@@ -23,24 +23,30 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@Tag(name = "Logs de Erros", description = "EndPoints para Logs de Erros")
+@Tag(name = "Logs", description = "EndPoints para Logs")
 @RequestMapping(value = "/eventlog")
 public class EventLogController {
     @Autowired
     private EventLogService service;
 
+    @Operation(summary = "Busca um Log por ID", description = "Busca um Log  por ID", tags = { "Logs" })
+    @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json"))
     @GetMapping("/{id}")
     public EventLog findById(@PathVariable Long id) {
         return service.findById(id).orElse(null);
     }
 
+    @Operation(summary = "Busca todos os Logs", description = "Busca todos os Logs ", tags = { "Logs" })
+    @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json"))
     @GetMapping()
     @PredicateAsQueryParamEventLog
     @PageableAsQueryParam
@@ -50,11 +56,15 @@ public class EventLogController {
         return service.findAll(predicate, pageable);
     }
 
+    @Operation(summary = "Criar um Log ", description = "Criar um Log ", tags = { "Logs" })
+    @ApiResponse(description = "Successful Operation", responseCode = "201", content = @Content(mediaType = "application/json"))
     @PostMapping
     public ResponseEntity<EventLog> create(@RequestBody EventLogUpdateDTO event) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDTO(event));
     }
 
+    @Operation(summary = "Altera um Log por ID", description = "Altera um Log por ID", tags = { "Logs" })
+    @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json"))
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody EventLogUpdateDTO event) {
         return service.findById(id).map(record -> {
@@ -64,6 +74,8 @@ public class EventLogController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Excluí um Log por ID", description = "Excluí um Log por ID", tags = { "Logs" })
+    @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json"))
     @DeleteMapping(path = { "/{id}" })
     public ResponseEntity<?> delete(@PathVariable long id) {
         return service.findById(id).map(record -> {

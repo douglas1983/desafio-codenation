@@ -35,7 +35,7 @@ public class EventLogService implements EventLogServiceInterface {
     public Page<EventLogDTO> findAll(Predicate predicate, Pageable pageable) {
         Page<EventLog> eventlogs = repository.findAll(predicate, pageable);
         List<EventLogDTO> eventslogDTO = eventlogs.get().map(mapper::map).collect(Collectors.toList());
-        return new PageImpl<EventLogDTO>(eventslogDTO, eventlogs.getPageable(), eventlogs.getSize());
+        return new PageImpl<EventLogDTO>(eventslogDTO, eventlogs.getPageable(), eventlogs.getTotalElements());
     }
 
     public EventLog save(EventLog record) {
